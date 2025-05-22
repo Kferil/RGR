@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оформление заказа</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+      color: #333;
+      text-align: center;
+      padding: 50px;
+    }
+    h2 {
+      margin-bottom: 30px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: white;
+      margin: 10px auto;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 60%;
+    }
+    button {
+      margin-top: 30px;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #c2185b;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Подтверждение заказа</h2>
+
+<form method="post">
+  {% csrf_token %}
+  <ul>
+    {% for item in cart_items %}
+      <li>{{ item.product.name }} — {{ item.product.price }} ₽ × {{ item.quantity }}</li>
+    {% endfor %}
+  </ul>
+  <button type="submit">Подтвердить заказ</button>
+</form>
+
+</body>
+</html>

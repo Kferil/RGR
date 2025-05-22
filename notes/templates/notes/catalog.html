@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -99,7 +100,7 @@
   <div class="catalog">
     {% for product in products %}
       <div class="card">
-        <img src="{{ product.image.url}}" alt="{{ product.name }}">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
         <h3>{{ product.name }}</h3>
         <p>{{ product.price }} ₽</p>
         <form method="post" action="{% url 'add_to_cart' product.id %}">

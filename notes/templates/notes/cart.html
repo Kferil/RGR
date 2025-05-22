@@ -15,31 +15,47 @@
     h1 {
       margin-bottom: 40px;
     }
-    .back-btn {
+    .cart-item {
+      margin: 10px 0;
+      font-size: 1.2em;
+    }
+    .back-btn, .checkout-btn {
       display: inline-block;
-      margin-top: 40px;
-      background-color: #555;
-      color: #fff;
+      margin-top: 30px;
+      background-color: #e91e63;
+      color: white;
       padding: 10px 25px;
       text-decoration: none;
-      border-radius: 25px;
+      border-radius: 8px;
       font-weight: bold;
       transition: background 0.3s;
     }
-    .back-btn:hover {
-      background-color: #333;
+    .back-btn:hover, .checkout-btn:hover {
+      background-color: #c2185b;
     }
   </style>
 </head>
 <body>
- <h2>Ваша корзина</h2>
- <ul>
-   {% for product in products %}
-     <li>{{ product.name }} — {{ product.price }} ₽</li>
-   {% empty %}
-     <li>Корзина пуста</li>
-   {% endfor %}
- </ul>
- <a href="{% url 'catalog' %}">← Назад в каталог</a>
+  <h1>Ваша корзина</h1>
+
+  <ul>
+  {% for item in cart_items %}
+    <li>
+      {{ item.product.name }} — {{ item.product.price }} ₽ × {{ item.quantity }}
+      <form method="post" action="{% url 'remove_from_cart' item.id %}">
+  {% csrf_token %}
+  <button type="submit">Удалить</button>
+</form>
+    </li>
+  {% empty %}
+    <li>Корзина пуста</li>
+  {% endfor %}
+</ul>
+
+  <a href="{% url 'catalog' %}" class="back-btn">← Назад в каталог</a>
+
+  {% if cart_items %}
+    <a href="{% url 'checkout' %}" class="checkout-btn">Оформить заказ</a>
+  {% endif %}
 </body>
 </html>

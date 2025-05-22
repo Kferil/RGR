@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Заказ оформлен</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+      color: #333;
+      text-align: center;
+      padding: 80px;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.2em;
+      margin-bottom: 40px;
+    }
+    a {
+      background-color: #e91e63;
+      color: white;
+      padding: 10px 25px;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    a:hover {
+      background-color: #c2185b;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Заказ успешно оформлен!</h2>
+<p>Спасибо за покупку. Мы скоро с вами свяжемся.</p>
+<a href="{% url 'catalog' %}">← Вернуться в каталог</a>
+
+</body>
+</html>

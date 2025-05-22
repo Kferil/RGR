@@ -4,7 +4,8 @@ from catalog.models import Product  # Предположим, что Product н�
 
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    session_key = models.CharField(max_length=40,null=True)
+    session_key = models.CharField(max_length=40, null=False, blank=True, default='')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # для авторизованных
     quantity = models.PositiveIntegerField(default=1)
 
     def str(self):
@@ -13,12 +14,13 @@ class CartItem(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_completed = models.BooleanField(default=False)
 
     def str(self):
         return f"Order #{self.id} by {self.user.username}"
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items',null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items', null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
 

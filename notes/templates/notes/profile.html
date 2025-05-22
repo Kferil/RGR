@@ -12,45 +12,68 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       flex-direction: column;
+      padding: 40px;
     }
-    h1 {
-      margin-bottom: 20px;
+
+    h1, h2 {
+      margin-bottom: 10px;
     }
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      text-align: center;
+
+    .order {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    .logout-form {
-      margin-top: 20px;
+
+    .order-item {
+      padding-left: 15px;
     }
-    .logout-form button {
+
+    a {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
       background-color: #e91e63;
       color: white;
-      border: none;
-      padding: 10px 20px;
+      text-decoration: none;
       border-radius: 8px;
       font-weight: bold;
-      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-    .logout-form button:hover {
+
+    a:hover {
       background-color: #c2185b;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Добро пожаловать, {{ user.username }}!</h1>
-    <p>Email: {{ user.email }}</p>
+  <h1>Добро пожаловать, {{ user.username }}!</h1>
+  <p>Email: {{ user.email }}</p>
 
-    <form class="logout-form" method="post" action="{% url 'logout' %}">
-      {% csrf_token %}
-      <button type="submit">Выйти</button>
-    </form>
-  </div>
+  <a href="{% url 'index' %}">На главную</a>
+  <a href="{% url 'logout' %}">Выйти</a>
+  <a href="{% url 'cart' %}">Корзина</a>
+
+  <h2>Мои заказы</h2>
+  {% if orders %}
+    {% for order in orders %}
+      <div class="order">
+        <p><strong>Заказ №{{ order.id }}</strong> — {{ order.created_at|date:"d.m.Y H:i" }}</p>
+        {% for item in order.items.all %}
+          <div class="order-item">
+            {{ item.product.name }} — {{ item.quantity }} шт.
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>У вас пока нет заказов.</p>
+  {% endif %}
 </body>
 </html>
